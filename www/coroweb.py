@@ -139,12 +139,12 @@ class RequestHandler(object):
 						'''
 		if kw is None:
 			# if get no args from request or handler func has no args
-			kw = dict(**requst.match_info)
+			kw = dict(**request.match_info)
 		else:
 			if not self._has_var_kw_arg and self._has_named_kw_args:
 				# remove all unnamed kw
 				copy = dict()
-				for name in self._has_named_kw_args:
+				for name in self._named_kw_args:
 					if name in kw:
 						copy[name] = kw[name]
 				kw = copy
@@ -191,15 +191,12 @@ def add_routes(app, module_name):
 	if n == (-1):
 		'''
 		__import__ 作用同import语句，但__import__是一个函数，并且只接收字符串作为参数, 
-		没有'.',则传入的是module名
-		__import__(module)其实就是 import module
-		'''
-		
+		其实import语句就是调用这个函数进行导入工作的, 其返回值是对应导入模块的引用
+		没有'.',则传入的是module名, __import__(module)其实就是 import module
+		'''		
 		mod = __import__(module_name, globals(), locals())
 	else:
-		'''
-		
-		其实import语句就是调用这个函数进行导入工作的, 其返回值是对应导入模块的引用
+		'''		
 		__import__('os',globals(),locals(),['path','pip']) ,等价于from os import path, pip
 		'''
 		name = module_name[n+1:]

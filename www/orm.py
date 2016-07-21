@@ -25,7 +25,7 @@ async def create_pool(loop, **kw):
 		port=kw.get('port', 3306),
 		user=kw['user'],
 		password=kw['password'],
-		db=kw['database'],
+		db=kw['db'],
 		charset=kw.get('charset', 'utf8'),
 		autocommit=kw.get('autocommit', True),
 		maxsize=kw.get('maxsize', 10),
@@ -89,17 +89,17 @@ class StringField(Field):
 
 class BooleanField(Field):
 
-	def __init__(self, name=None, default=None):
+	def __init__(self, name=None, default=False):
 		super().__init__(name, 'boolean', False, default)
 
 class IntegerField(Field):
 
-	def __init__(self, name=None, primary_key=False, default=None):
+	def __init__(self, name=None, primary_key=False, default=0):
 		super().__init__(name, 'bigint', primary_key, default)	
 
 class FloatField(Field):
 
-	def __init__(self, name=None, primary_key=False, default=None):
+	def __init__(self, name=None, primary_key=False, default=0.0):
 		super().__init__(name, 'real', primary_key, default)
 
 class TextField(Field):
@@ -177,13 +177,13 @@ class Model(dict, metaclass=ModelMetaclass):
 	@classmethod
 	async def findAll(cls, where=None, args=None, **kw):
 		# find objects by where clause.
-		sql = cls.__select__
+		sql = [cls.__select__]
 		if where:
 			 sql.append('where')
 			 sql.append(where)
 		if args is None:
 			args = []
-		oderBy = kw.get('orderBy', None)
+		orderBy = kw.get('orderBy', None)
 		if orderBy:
 			sql.append('order by')
 			sql.append(orderBy)

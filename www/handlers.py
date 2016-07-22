@@ -85,6 +85,9 @@ async def index(*, page='1'):
 		blogs = []
 	else:
 		blogs = await Blog.findAll(orderBy='created_at desc', limit=(page.offset, page.limit))
+		for blog in blogs:
+			comm_num = await Comment.findNumber('id', 'blog_id=?', [blog.id])
+			blog['comm_num'] = comm_num
 	return {
 		'__template__': 'blogs.html',
 		'page': page,
@@ -115,13 +118,15 @@ def signout(request):
 async def get_blog(id):
 	blog = await Blog.find(id)
 	comments = await Comment.findAll('blog_id=?', [id], orderBy='created_at desc')
+	comm_num = await Comment.findNumber('id', 'blog_id=?', [id])
 	for c in comments:
 		c.html_content = text2html(c.content)
 	blog.html_content = markdown2.markdown(blog.content)
 	return {
 		'__template__': 'blog.html',
 		'blog': blog,
-		'comments': comments
+		'comments': comments,
+		'comm_num': comm_num
 	}
 
 @get('/manage/')

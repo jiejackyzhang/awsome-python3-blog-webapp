@@ -15,7 +15,7 @@
     {% for blog in blogs %}
         <article class="uk-article">
             <h2><a href="/blog/{{ blog.id }}">{{ blog.name }}</a></h2>
-            <p class="uk-article-meta">{{ blog.created_at|datetime }}</p>
+            <p class="uk-article-meta">{{ blog.created_at|datetime }} / Comments - {{ blog.comm_num }}</p>
             <p>{{ blog.summary }}</p>
             <p><a href="/blog/{{ blog.id }}">More <i class="uk-icon-angle-double-right"></i></a></p>
         </article>

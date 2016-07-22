@@ -51,6 +51,7 @@
                         <div class="uk-dropdown uk-dropdown-navbar">
                             <ul class="uk-nav uk-nav-navbar">
                                 {% if __user__.admin %}
+                                    <li><a href="/manage/blogs/create"><i class="uk-icon-pencil"></i> New</a></li>
                                     <li><a href="/manage/"><i class="uk-icon-cog"></i> Manage</a></li>
                                 {% endif %}    
                                 <li><a href="/signout"><i class="uk-icon-sign-out"></i> Log out</a></li>
@@ -84,8 +85,7 @@
                     <a target="_blank" href="https://www.linkedin.com/in/jie-zhang-207330bb" class="uk-icon-button uk-icon-linkedin-square"></a>
                     <a target="_blank" href="https://twitter.com/jackyzhang_201" class="uk-icon-button uk-icon-twitter"></a>
                 </p>
-                <p>Powered by <a href="">Blog Webapp</a>. Copyright &copy; 2016. [<a href="/manage/" target="_blank">Manage</a>]</p>
-                <p>Made by Jacky Zhang @SBU.</p>
+                <p>Made by Jacky Zhang @SBU. [<a href="/manage/" target="_blank">Manage</a>]</p>
                 <a target="_blank" href="http://www.w3.org/TR/html5/"><i class="uk-icon-html5" style="font-size:64px; color: #444;"></i></a>
             </div>
         </div>

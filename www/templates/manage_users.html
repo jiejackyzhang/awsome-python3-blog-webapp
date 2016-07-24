@@ -87,7 +87,7 @@ $(function() {
                         <span v-text="user.created_at.toDateTime()"></span>
                     </td>
                     <td>
-                        <span v-if="!user.admin"><a href="#0" title="delete" v-on="click: delete_user(user)"><i class="uk-icon-trash-o"></i></span>
+                        <span v-if="!user.admin"><a href="#0" title="delete" v-on="click: delete_user(user)"><i class="uk-icon-trash-o"></i></a></span>
                     </td>
                 </tr>
             </tbody>

@@ -8,6 +8,25 @@
 
 var comment_url = '/api/blogs/{{ blog.id }}/comments';
 
+var 
+    id = '{{ blog.id }}',
+    name = '{{ blog.name }}';
+
+function edit_blog() {
+    location.assign('/manage/blogs/edit?id=' + id);
+}
+
+function delete_blog() {
+    if (confirm('Confirm： delete blog “' + name + '”？')) {
+        postJSON('/api/blogs/' + id + '/delete', function (err, r) {
+            if (err) {
+                return alert(err.message || err.error || err);
+            }
+            location.assign('/manage/blogs');
+        });
+    }
+}
+
 $(function () {
     var $form = $('#form-comment');
     $form.submit(function (e) {
@@ -35,6 +54,12 @@ $(function () {
         <article class="uk-article">
             <h2>{{ blog.name }}</h2>
             <p class="uk-article-meta">{{ blog.created_at|datetime }} / Created by {{ blog.user_name }} / Comments - {{ comm_num }}</p>
+            <p>
+                {% if __user__.admin %}           
+                    <a href="#0" title="edit" onclick="edit_blog()"><i class="uk-icon-edit"></i></a>
+                    <a href="#0" title="delete" onclick="delete_blog()"><i class="uk-icon-trash-o"></i></a>
+                {% endif %}
+            </p>
             <p>{{ blog.html_content|safe }}</p>
         </article>
 

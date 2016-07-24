@@ -99,8 +99,9 @@ ENV/
 Icon?
 ehthumbs.db
 Thumbs.db
-dist
 MANIFEST
+dist
+backup
 
 # Translations
 *.mo

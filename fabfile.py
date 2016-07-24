@@ -42,7 +42,11 @@ def backup():
     dt = _now()
     f = 'backup-blog-%s.sql' % dt
     with cd('/tmp'):
+<<<<<<< HEAD
         run('mysqldump --user=%s --password=%s --skip-opt --add-drop-table --default-character-set=utf8 --quick blog > %s' % (db_user, db_password, f))
+=======
+        run('mysqldump --user=%s --password=%s --skip-opt --add-drop-table --default-character-set=utf8 --quick awesome > %s' % (db_user, db_password, f))
+>>>>>>> dev
         run('tar -czvf %s.tar.gz %s' % (f, f))
         get('%s.tar.gz' % f, '%s/backup/' % _current_path())
         run('rm -f %s' % f)
@@ -129,8 +133,13 @@ def rollback():
         sudo('ln -s %s www' % old)
         sudo('chown www-data:www-data www')
         with settings(warn_only=True):
+<<<<<<< HEAD
             sudo('supervisorctl stop blog')
             sudo('supervisorctl start blog')
+=======
+            sudo('supervisorctl stop awesome')
+            sudo('supervisorctl start awesome')
+>>>>>>> dev
             sudo('/etc/init.d/nginx reload')
         print ('ROLLBACKED OK.')
 
@@ -166,14 +175,24 @@ def restore2local():
     print ('Start restore to local database...')
     p = raw_input('Input mysql root password: ')
     sqls = [
+<<<<<<< HEAD
         'drop database if exists blog;',
         'create database blog;',
         'grant select, insert, update, delete on blog.* to \'%s\'@\'localhost\' identified by \'%s\';' % (db_user, db_password)
+=======
+        'drop database if exists awesome;',
+        'create database awesome;',
+        'grant select, insert, update, delete on awesome.* to \'%s\'@\'localhost\' identified by \'%s\';' % (db_user, db_password)
+>>>>>>> dev
     ]
     for sql in sqls:
         local(r'mysql -uroot -p%s -e "%s"' % (p, sql))
     with lcd(backup_dir):
         local('tar zxvf %s' % restore_file)
+<<<<<<< HEAD
     local(r'mysql -uroot -p%s blog < backup/%s' % (p, restore_file[:-7]))
+=======
+    local(r'mysql -u root -p%s awesome < backup/%s' % (p, restore_file[:-7]))
+>>>>>>> dev
     with lcd(backup_dir):
         local('rm -f %s' % restore_file[:-7])

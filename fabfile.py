@@ -170,10 +170,11 @@ def restore2local():
         'create database blog;',
         'grant select, insert, update, delete on blog.* to \'%s\'@\'localhost\' identified by \'%s\';' % (db_user, db_password)
     ]
+    mysql = '/usr/local/mysql/bin/mysql'
     for sql in sqls:
-        local(r'mysql -uroot -p%s -e "%s"' % (p, sql))
+        local(r'%s -uroot -p%s -e "%s"' % (mysql, p, sql))
     with lcd(backup_dir):
         local('tar zxvf %s' % restore_file)
-    local(r'mysql -uroot -p%s blog < backup/%s' % (p, restore_file[:-7]))
+    local(r'%s -uroot -p%s blog < backup/%s' % (mysql, p, restore_file[:-7]))
     with lcd(backup_dir):
         local('rm -f %s' % restore_file[:-7])

@@ -3,6 +3,12 @@ A blog webapp demo developed in Python 3.5, including three parts: blogs, users 
 
 [demo link](http://52.37.25.30/)
 
+**Admin account:**
+
+username: jie.jacky.zhang@gmail.com
+
+password: 123456
+
 ### Requirements
 1. Python 3.5.x
 2. aiohttp

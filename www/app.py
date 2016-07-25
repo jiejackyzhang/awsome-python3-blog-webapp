@@ -160,10 +160,13 @@ def datetime_filter(t):
 		return '%s-%s-%s' % (dt.year, dt.month, dt.day)
 
 async def init(loop):
+	# create a global database connection pool
 	await orm.create_pool(loop=loop, **configs.db)
+	# create an Application instance
 	app = web.Application(loop=loop, middlewares=[logger_factory, auth_factory, response_factory])
+	# init jinja2
 	init_jinja2(app, filters=dict(datetime=datetime_filter))
-	# add url handle func, 'handlers' is the module name
+	# add url handler func, 'handlers' is the module name
 	add_routes(app, 'handlers')
 	# add path of static files
 	add_static(app)

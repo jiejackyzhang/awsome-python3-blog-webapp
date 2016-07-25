@@ -110,6 +110,11 @@ class TextField(Field):
 class ModelMetaclass(type):
 
 	def __new__(cls, name, bases, attrs):
+		# cls: 当前准备创建的类的对象；
+		# name: 类的名字；
+		# bases: 类继承的父类集合；
+		# attrs: 类的方法集合。
+
 		# exclude class Model itself 
 		if name == 'Model':
 			return type.__new__(cls, name, bases, attrs)
@@ -117,9 +122,9 @@ class ModelMetaclass(type):
 		tableName = attrs.get('__table__', None) or name
 		logging.info('found model: %s (talbe: %s)' % (name, tableName))
 		# get all fields and primary key
-		mappings = dict()
-		fields = []
-		primaryKey = None
+		mappings = dict() # field_name -> Field
+		fields = [] # fields(name) excluding primary key 
+		primaryKey = None # primary key (name)
 		for k, v in attrs.items():
 			if isinstance(v, Field):
 				logging.info('\tfound mapping: %s ==> %s' % (k, v))
